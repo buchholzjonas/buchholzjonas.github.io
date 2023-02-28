@@ -1,0 +1,56 @@
+body {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Noto Serif', serif;
+}
+
+div.main-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 40em;
+}
+
+h1 {
+    font-size: x-large;
+    text-align: center;
+}
+
+h2 {
+    font-size: large;
+    text-align: center;
+}
+
+h3 {
+    font-size: medium;
+    text-align: center;
+}
+
+p {
+    line-height: 1.7em;
+}
+
+p.speaker {
+    display: block;
+    text-align: center;
+}
+
+p.colophon {
+    display: block;
+    text-align: center;
+    margin-bottom: 2.5em;
+}
+
+.devanagari {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: larger;
+}
+
+div.control-box {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: small;
+}
