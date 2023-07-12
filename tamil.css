@@ -92,7 +92,7 @@ h3 {
     color: darkcyan;
   }
 
-.app-anchor:hover .app-tooltip, .note-anchor:hover .note-tooltip, .w:hover .w-tooltip {
+.app-anchor:hover .app-tooltip, .note-anchor:hover .note-tooltip {
     visibility: visible;
   }
 
