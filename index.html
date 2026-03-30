@@ -477,6 +477,481 @@ a, a:visited {
         display: none !important;
     }
 }</style>
+      <title>Digital edition of Civañāṉa Muṉivar's Kāñcippurāṇam - chapter 12</title><script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script><script type="text/javascript">/* JQuery functions for HTML conversions of HTL editions */
+
+$(document).ready(function(){
+
+    /* Function to show and hide elements depending on which checkboxes are checked */
+    function show_hide() {   
+        /* Sandhi-nosandhi */
+        if ( $('#input-sandhi').is(':checked') && $('#input-metrical').is(':checked') ) {
+            $('.sandhi').show();
+            $('.nosandhi').hide();
+            $('.joined').show();
+            $('.split').hide();
+        };
+        if ( $('#input-sandhi').is(':checked') && $('#input-wordbreaks').is(':checked') ) {
+            $('.sandhi').show();
+            $('.nosandhi').hide();
+            $('.joined').hide();
+            $('.split').show();
+        };
+        if ( $('#input-nosandhi').is(':checked') ) {
+            $('.joined').hide();
+            $('.split').show();
+            $('.sandhi').hide();
+            $('.nosandhi').show();
+        };
+        /* Metrical breaks - word breaks */
+        if ( $('#input-metrical').is(':checked') ) {
+            $('.mb').html('&nbsp;');
+            $('.wb').hide();
+        };
+        if ( $('#input-wordbreaks').is(':checked') ) {
+            if ( $('#input-also-metrical').is(':checked') ) {
+                $('.mb').html('/');
+            } else {
+                $('.mb').html('');
+            }
+            $('.wb').show();
+        };
+    };
+
+    /* Default display */
+    $(".collapsible-content").hide();
+    $('#input-horizontal').prop('checked',true);
+    $('#input-Deva').prop('checked',true);
+    $('#input-Taml').prop('checked',true);
+    $('#input-sandhi').prop('checked',true);
+    $('#input-metrical').prop('checked',true);
+    $('#suboption-also-metrical').hide();
+    $('#input-variants').prop('checked',true);
+    $('#input-notes').prop('checked',true);
+    $('#input-quotes').prop('checked',true);
+    $('#input-translation').prop('checked',true);
+    $('.Latn').hide();
+    $('.Gran').hide();
+    $('.nosandhi').hide();
+    $('.split').hide();
+    $('.mb').html('&nbsp;')
+    $('.wb').hide();
+    /* If document also contains edition, hide stanza numbers in translation */
+    if ($('.htl-edition').length > 0) {
+        $('.translation .number').css('visibility', 'hidden');
+      }
+
+    $(".collapsible-label").click(function() {
+        $(this).toggleClass("active");
+        $(this).next(".collapsible-content").toggle();
+    });
+
+    /* vertical-horizontal */
+    $('#input-vertical').on('change', function(){
+        $('.main-content').toggleClass('grid');
+    });
+    $('#input-horizontal').on('change', function(){
+        $('.main-content').toggleClass('grid');
+    });
+
+    /* toggle script */
+
+    $('#input-Deva').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.Deva').show();
+            $('.Gran').hide();
+            $('.Latn').hide();
+        }
+    });
+    $('#input-Gran').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.Gran').show();
+            $('.Deva').hide();
+            $('.Latn').hide();
+        }
+    });
+    $('#input-Taml').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.Taml').show();
+            $('.Latn').hide();
+        }
+    });
+    $('#input-Latn').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.Latn').show();
+            $('.Deva').hide();
+            $('.Gran').hide();
+            $('.Taml').hide();
+        }
+    });
+
+    /* sandhi-nosandhi */
+    $('#input-sandhi').on('change', show_hide);
+    $('#input-nosandhi').on('change', show_hide);
+
+    /* metrical breaks - word breaks */
+    $('#input-metrical').on('change', function(){
+        $('#suboption-also-metrical').hide();
+        show_hide();
+    });
+    $('#input-wordbreaks').on('change', function(){
+        $('#suboption-also-metrical').show();
+        show_hide();
+    });
+    $('#input-also-metrical').on('change', show_hide);
+
+    /*variants*/
+    $('#input-variants').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.apparatus').show();
+            $('.app-anchor').css('text-decoration', 'underline dotted');
+        } else {
+            $('.apparatus').hide();
+            $('.app-anchor').css('text-decoration', 'none');
+        }
+    });
+
+    /* notes in translation*/
+    $('#input-notes').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.translation .notes').show();
+            $('.translation sup').show();
+        } else {
+            $('.translation .notes').hide();
+            $('.translation sup').hide();
+        }
+    });
+
+    /*translation*/
+    $('#input-translation').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.translation').show();
+        } else {
+            $('.translation').hide();
+        }
+    });
+
+    /*translation*/
+    $('#input-quotes').on('change', function(){
+        if ( $(this).is(':checked') ) {
+            $('.quote').show();
+        } else {
+            $('.quote').hide();
+        }
+    });
+
+    /* Highlight variant readings */
+    $('.app-anchor, .app-entry').hover(function() {
+        if (  $('#input-variants').is(':checked') ) {
+            const id = $(this).attr('id');
+            $(`.app-anchor#${id}`).toggleClass('highlight');
+            $(`.app-entry#${id}`).toggleClass('highlight');
+        }
+    });
+
+    /* Highlight words */
+    $('.w').hover(function() {
+        const id = $(this).attr('id');
+        $(`.w#${id}`).toggleClass('w-hover');
+    }
+    );
+
+    /* Test: Highlight corresponding words/phrases in original text and translation */
+    $('.w').hover(function() {
+        const id = $(this).attr('id');
+        const corresp_ids = $(`.phr[id*="${id}"]`).attr('id').split(' ')
+        corresp_ids.forEach(id => {
+            $(`.w[id="${id}"]`).toggleClass('highlight');
+        });
+        $(`.phr[id*="${id}"]`).toggleClass('highlight');
+    });
+
+    $('.phr').hover(function() {
+        const id = $(this).attr('id');
+        const ids = $(this).attr('id').split(' ');
+        $(`.phr[id="${id}"]`).toggleClass('highlight');
+        ids.forEach(id => {
+            $(`.w[id="${id}"]`).toggleClass('highlight');
+        });
+    });
+
+});</script><style type="text/css">/* Stylesheet for HTML conversions of HTL editions and translations */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Devanagari:wght@100..900&family=Noto+Sans+Tamil:wght@100..900&display=swap&family=Noto+Sans+Grantha&display=swap');
+
+.Deva {
+    font-family: 'Noto Sans Devanagari';
+    font-size: 120%;
+}
+
+.Taml {
+    font-family: 'Noto Sans Tamil';
+    text-underline-offset: 0.4em;
+}
+
+.Gran {
+    font-family: 'Noto Sans Grantha';
+}
+
+/* Toggleable class for grid layout */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+}
+
+body {
+    margin: 20px 0;
+    font-family: 'Noto Sans', system-ui, sans-serif;
+    color: #333333;
+    text-underline-offset: 0.3em;
+}
+
+.main-content {
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 180%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.htl-edition, .translation {
+    width: 631px;
+    /*margin-bottom: 1.6rem;*/
+    display: grid;
+    grid-template-columns: 1fr 15fr;
+    align-items: start;
+}
+
+.htl-edition, .number {
+    grid-column-start: 1;
+}
+
+.translation, .stanza, .paragraph, .l, .label, .trailer, .apparatus, .notes {
+    grid-column-start: 2;
+}
+
+.l, .apparatus, .paragraph {
+    margin-left: 1rem;
+}
+
+h1, h2, h3, h4 {
+    text-align: center;
+    grid-column-start: 2;
+}
+
+h1 {
+    font-size: xx-large;
+}
+
+h2 {
+    font-size: x-large;
+}
+
+h3 {
+    font-size: large;
+}
+
+.htl-edition[lang="ta"] .stanza, .htl-edition[lang="ta"] .number {
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
+}
+
+.number {
+    font-size: 0.85em;
+    padding-right: 0.5rem;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.translation {
+    margin-top: 0.6em;
+    margin-bottom: 1.2em;
+}
+
+.label {
+    display: block;
+    text-align: center;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.trailer {
+    display: block;
+    text-align: center;
+    margin-top: 1.6rem;
+}
+
+.apparatus, .notes {
+    font-size: small;
+    font-weight: normal;
+    line-height: 160%;
+    margin-top: 0.6rem;
+}
+
+.apparatus {
+    margin-bottom: 0.6rem;
+}
+
+.app-entry, .note {
+    display: block;
+    max-width: fit-content;
+}
+
+.app-anchor {
+    text-decoration: underline dotted;
+}
+
+h2 .app-entry, .label .app-entry, .trailer .app-entry {
+    margin: auto;
+}
+
+sup {
+    font-size: 80%;
+    vertical-align: top;
+    position: relative; top: -0.5rem;
+}
+
+a, a:visited {
+    color: #0063AF;
+    text-decoration: none;
+}
+
+.quote {
+    font-size: 80%;
+}
+
+.foreign {
+    font-style: italic;
+}
+
+.foreign .Deva, .foreign .Taml {
+    font-style: normal;
+}
+
+/* Workaround for indentation */
+.indent {
+    display: inline-block;
+    width: 2em;
+}
+
+.l {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    line-height: inherit;
+    margin-bottom: 0.2em;
+}
+
+.container {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 130%;
+}
+
+/* Tooltips */
+
+.w {
+    position: relative;
+}
+
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    display: block;
+    text-align: left;
+    width: max-content; 
+    max-width: 400px;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+    margin-bottom: 0.3rem;
+    z-index: 1;
+    font-size: 80%;
+    border-radius: 2px;
+    background-color: #0063af;
+    color: white;
+    line-height: 170%;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* Position arrow at bottom of tooltip */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #0063af transparent transparent transparent;
+  }
+
+.stanza .w:hover, .w-hover {
+    color: #b35100;
+  }
+
+.w:hover .tooltip {
+    visibility: visible;
+}
+
+/* Toggleable class to highlight elements */
+.highlight {
+    background-color: #d1ebff;
+}
+
+/* Control box */
+
+.control-box {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 20px;
+    margin-right: 20px;
+    font-size: small;
+    z-index: 1;
+    font-family: 'Noto Sans';
+}
+
+.collapsible-label {
+    background-color: #f2f2f2;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    width: 100%;
+    text-align: left;
+    font-family: 'Noto Sans';
+    padding: 0.6rem;
+}
+
+.active, .collapsible-label:hover {
+    background-color: lightgray;
+  }
+
+.collapsible-content {
+    background-color: #f2f2f2;
+    padding: 0.6rem;
+    padding-top: 0.2rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+}
+
+.control-heading {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.control-suboption {
+    margin-left: 1.5rem;
+}
+
+/* Hide control box when printing */
+@media print
+{    
+    .control-box, .control-box *
+    {
+        display: none !important;
+    }
+}</style>
    </head>
    <body>
       <div class="control-box"><button type="button" class="collapsible-label"><b>Display options</b></button><div class="collapsible-content">
